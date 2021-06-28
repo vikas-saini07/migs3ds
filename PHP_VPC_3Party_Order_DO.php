@@ -7,6 +7,7 @@ $conn = new VPCPaymentConnection();
 // This is secret for encoding the SHA256 hash
 // This secret will vary from merchant to merchant
 $secureSecret = $_POST["SecureSecret"];
+echo $secureSecret;
 
 //$secureSecret = "5C7D98994ACE314AEDCFA9879D2FAB81";
 
