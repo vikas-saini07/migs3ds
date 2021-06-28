@@ -32,6 +32,7 @@ unset($_POST["virtualPaymentClientURL"]);
 unset($_POST["SubButL"]);
 unset($_POST["Title"]);
 
+/*
 // Add VPC post data to the Digital Order
 foreach($_POST as $key => $value) {
 	if (strlen($value) > 0) {
@@ -53,5 +54,23 @@ $vpcURL = $conn->getDigitalOrder($vpcURL);
 
 header("Location: ".$vpcURL);
 //echo "<a href=$vpcURL>$vpcURL</a>";
+*/
+
+// Add VPC post data to the Digital Order
+foreach($_POST as $key => $value) {
+	if (strlen($value) > 0) {
+		$conn->addDigitalOrderField($key, $value);
+	}
+}
+
+
+// Obtain a one-way hash of the Digital Order data and add this to the Digital Order
+$secureHash = $conn->hashAllFields();
+$conn->addDigitalOrderField("vpc_SecureHash", $secureHash);
+$conn->addDigitalOrderField("vpc_SecureHashType", "SHA256");
+// Obtain the redirection URL and redirect the web browser
+$vpcURL = $conn->getDigitalOrder($vpcURL);
+header("Location: ".$vpcURL);
+
 
 ?>
